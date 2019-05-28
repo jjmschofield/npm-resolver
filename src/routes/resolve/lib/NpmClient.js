@@ -41,6 +41,11 @@ class NpmClient {
       return pkg;
     }
     catch (error) {
+      if (error.response && error.response.status === 401) {
+        const pkg = new Package({ name, version });
+        pkg.error = 401;
+        return pkg;
+      }
       throw error;
     }
   }
