@@ -35,5 +35,9 @@ $ npm test:int
 * Peer dependencies are not handled
 * No explicit performance tests are provided
 * Private repos are handled by returning an error code on the model, however a check is not performed to confirm that a 401 resulted from a private repo (rather then a bad npm response)
+  * Alternatively this blog post is a bit of a smoking gun https://blog.npmjs.org/post/180599338975/401-scoped-packages
 * Requests are not retried
 * We do not persist a cache of resolutions - eg a cache to disk or memeory persistent between calls could be used to optimize subsequent resolutions on a package (with a suitable TTL)
+* # Responses from NPM are not validated (chances of XSS as anyone can publish there?)
+* Requests are validated in line, doing it in middleware may be preferable to protect the scope of the controller?
+* Request parameters are not sufficiently well sanitized and validated
