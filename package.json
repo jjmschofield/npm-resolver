@@ -1,0 +1,44 @@
+{
+  "name": "npm-resolver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test:unit": "jest",
+    "test:int": "jest --testMatch=**/*.test.int.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjmschofield/npm-resolver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjmschofield/npm-resolver/issues"
+  },
+  "homepage": "https://github.com/jjmschofield/npm-resolver#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jasmine": "^2.10.1",
+    "eslint-plugin-jest": "^22.6.4",
+    "jest": "^24.8.0",
+    "jest-junit": "^6.4.0",
+    "nodemon": "^1.19.1"
+  },
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testResultsProcessor": "jest-junit"
+  }
+}
