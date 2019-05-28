@@ -78,7 +78,7 @@ describe('src/routes/resolve/models/Package.js', () => {
         version: '1.0.0',
       };
 
-      const expectedId = `${fake.name}@${fake.version}`;
+      const expectedId = `${fake.name}#${fake.version}`;
 
       // Act
       const result = underTest.resolvePackageId(fake.name, fake.version);
@@ -95,7 +95,7 @@ describe('src/routes/resolve/models/Package.js', () => {
         version: '1.0.0',
       };
 
-      const fake = `${expected.name}@${expected.version}`;
+      const fake = `${expected.name}#${expected.version}`;
 
       // Act
       const result = underTest.resolvePackage(fake);

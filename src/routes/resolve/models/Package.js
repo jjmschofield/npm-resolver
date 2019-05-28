@@ -4,6 +4,7 @@
  * @property {string} version
  * @property {string} id In the format <name>@<version>
  * @property {string[]} dependencies List of dependent ID's
+ * @property {number | null} error Recoverable errors encountered in resolving the package
  */
 class Package {
   /**
@@ -16,6 +17,7 @@ class Package {
     this.version = version;
     this.id = resolvePackageId(name, version);
     this.dependencies = dependencies;
+    this.error = null;
   }
 
   /**
@@ -41,7 +43,7 @@ class Package {
  * @returns {string}
  */
 const resolvePackageId = (name, version) => {
-  return `${name}@${version}`;
+  return `${name}#${version}`;
 };
 
 /**
@@ -50,7 +52,7 @@ const resolvePackageId = (name, version) => {
  * @returns {{name: string, version: string}}
  */
 const resolvePackage = (id) => {
-  const split = id.split('@');
+  const split = id.split('#');
   return {
     name: split[0],
     version: split[1],
