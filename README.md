@@ -34,3 +34,6 @@ $ npm test:int
 * Only production dependents are considered, dev dependencies are not handled
 * Peer dependencies are not handled
 * No explicit performance tests are provided
+* Private repos are handled by returning an error code on the model, however a check is not performed to confirm that a 401 resulted from a private repo (rather then a bad npm response)
+* Requests are not retried
+* We do not persist a cache of resolutions - eg a cache to disk or memeory persistent between calls could be used to optimize subsequent resolutions on a package (with a suitable TTL)
