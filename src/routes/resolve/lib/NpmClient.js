@@ -4,7 +4,7 @@ const { Package, resolvePackageId } = require('../models/Package');
 
 /**
  * @property registry Full URL for the registry which the client will talk to
- * @requestCache {Map<string, object>} Cache of requests made by the client
+ * @property requestCache {Map<string, object>} Cache of requests made by the client
  */
 class NpmClient {
   /**
