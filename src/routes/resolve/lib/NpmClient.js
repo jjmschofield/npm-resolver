@@ -3,6 +3,10 @@ const semver = require('semver');
 const { Package, resolvePackageId } = require('../models/Package');
 
 /**
+ * Provides request functionality into the NPM API.
+ *
+ * Caches each request in a simple map held in memory
+ *
  * @property registry Full URL for the registry which the client will talk to
  * @property requestCache {Map<string, object>} Cache of requests made by the client
  */

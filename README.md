@@ -38,6 +38,7 @@ $ npm test:int
   * Alternatively this blog post is a bit of a smoking gun https://blog.npmjs.org/post/180599338975/401-scoped-packages
 * Requests are not retried
 * We do not persist a cache of resolutions - eg a cache to disk or memeory persistent between calls could be used to optimize subsequent resolutions on a package (with a suitable TTL)
-* # Responses from NPM are not validated (chances of XSS as anyone can publish there?)
+* Responses from NPM are not validated (chances of XSS as anyone can publish there?)
 * Requests are validated in line, doing it in middleware may be preferable to protect the scope of the controller?
 * Request parameters are not sufficiently well sanitized and validated
+* Resolver class could be more functional
