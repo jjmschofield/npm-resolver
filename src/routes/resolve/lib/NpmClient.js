@@ -45,9 +45,9 @@ class NpmClient {
       return pkg;
     }
     catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error.response) {
         const pkg = new Package({ name, version });
-        pkg.error = 401;
+        pkg.error = error.response.status;
         return pkg;
       }
       throw error;
@@ -63,11 +63,10 @@ class NpmClient {
     const response = await this.cachedRequest(`${this.registry}/${name}`);
 
     const versions = Object.keys(response.versions);
-    versions.sort().reverse();
+    versions.sort(semver.rcompare);
 
     for (const key in versions) {
       const testVersion = versions[key];
-
       if (semver.valid(testVersion) && semver.satisfies(testVersion, version)) {
         return {
           name,
