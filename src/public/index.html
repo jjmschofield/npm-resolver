@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>npm-resolver</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.css" integrity="sha256-OhImf+9TMPW5iYXKNT4eRNntf3fCtVYe5jZqo/mrSQA=" crossorigin="anonymous"/>
+  <style>
+    body {
+      margin-top: 25px;
+    }
+  </style>
+
+</head>
+<body>
+<main role="main" class="container">
+  <section>
+    <header>
+      <h1>npm-resolver</h1>
+    </header>
+    <form id="form" class="form-inline">
+      <div class="col-sm-10">
+        <input name="name"
+               type="text"
+               class="form-control form-control-lg"
+               placeholder="Package Name"
+               style="width:100%"
+               aria-label="Package Name">
+      </div>
+      <div class="col-sm-2">
+        <button id="btn" class="btn btn-primary btn-lg" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+  </section>
+  <section id="results" style="display:none" class="col-sm-12">
+    <hr>
+    <header>
+      <h1 id="header"></h1>
+    </header>
+    <section>
+      <p>Dependency Counts:</p>
+      <div id="summary"></div>
+    </section>
+    <section>
+      <h2>Tree</h2>
+      <div id="json"></div>
+    </section>
+  </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.js" integrity="sha256-yB+xHoEi5PoOnEAgHNbRMIbN4cNtOXAmBzkhNE/tQlI=" crossorigin="anonymous"></script>
+<script>
+  (async function () {
+    const formSelector = '#form';
+    const btn = $("#btn");
+    const resultsElem = $("#results");
+
+    document.querySelector(formSelector).addEventListener("submit", formSubmitHandler);
+
+    async function formSubmitHandler(event) {
+      event.preventDefault();
+
+      const formData = new FormData(document.querySelector(formSelector));
+
+      const name = encodeURIComponent(formData.get('name'));
+
+      if (name.length < 3) return;
+
+      resultsElem.hide();
+
+      btn.attr("disabled", true);
+
+      try {
+        const data = await resolve(name);
+        $("#json").JSONView(data.pkg, { collapsed: true });
+        $("#header").text(`${data.pkg.name}@${data.pkg.version}`);
+        $("#summary").html(`<ul><li>First Order ${data.firstOrderCount}</li> <li>Total ${data.totalCount}</li></ul>`);
+        resultsElem.show();
+      }
+      catch (error) {
+        alert(error.message);
+        console.log(error);
+      }
+
+      btn.attr("disabled", false);
+    }
+
+    async function resolve(name) {
+      let url = 'http://localhost:3000/resolve/' + name;
+
+      const response = await fetch(url);
+
+      console.log(response);
+
+      if (response.status >= 400) throw Error(response.statusText);
+
+      const data = await response.json();
+
+      const packages = new Map();
+
+      data.packages.map((pkg) => {
+        packages.set(pkg.id, pkg);
+      });
+
+      packages.forEach((pkg) => {
+        pkg.dependencies = pkg.dependencies.map((id) => {
+          return packages.get(id);
+        });
+      });
+
+      return {
+        firstOrderCount: data.packages[0].dependencies.length,
+        totalCount: packages.size - 1,
+        pkg: data.packages[0],
+      };
+    }
+  })();
+</script>
+</body>
+</html>
