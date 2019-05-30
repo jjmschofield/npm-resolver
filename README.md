@@ -97,7 +97,7 @@ $ npm test:int
   * Some more thought is probably required to provide suitable traces and to attempt to recover (eg failed NPM API requests)
 * The process is concurrent - but that concurrency is not fully under control
   * Packages with many dependencies will exponentially create many calls to retrieve package information and to resolve package versions
-* A very simply in memory cache is provided 
+* A very simple in memory cache is provided 
   * It is likely it will consume a large amount of machine resources, especially if the service itself receives concurrent requests
 * Only production dependencies are considered, dev dependencies are not handled
 * Peer dependencies are not handled
