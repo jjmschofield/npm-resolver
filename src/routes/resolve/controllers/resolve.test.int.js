@@ -3,6 +3,10 @@ const { createResponseMock } = require('../../../lib/express/mocks/express.mock'
 
 describe('src/routes/resolve/controllers/resolve.js', () => {
   describe('get', () => {
+    beforeEach(() => {
+      jest.setTimeout(60000);
+    });
+
     it('should resolve express 4.17.0', async () => {
       // Arrange
       const fakeReq = {
