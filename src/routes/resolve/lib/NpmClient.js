@@ -14,7 +14,7 @@ class NpmClient {
   /**
    * @param {string} registry Full URL for the registry which the client should talk to
    */
-  constructor({ registry = 'https://registry.npmjs.org' }) {
+  constructor({ registry = 'https://registry.npmjs.org' } = {}) {
     this.registry = registry;
     this.requestCache = new Map();
   }

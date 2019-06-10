@@ -28,7 +28,7 @@ describe('src/routes/resolve/lib/NpmClient.js', () => {
       const expected = 'https://registry.npmjs.org';
 
       // Act
-      const result = new underTest.NpmClient({});
+      const result = new underTest.NpmClient();
 
       // Assert
       expect(result.registry).toEqual(expected);
@@ -50,7 +50,7 @@ describe('src/routes/resolve/lib/NpmClient.js', () => {
           axios.get.mockResolvedValue({ data: fake });
 
           // Act
-          const client = new underTest.NpmClient({});
+          const client = new underTest.NpmClient();
           const result = await client.getPackage(fake.name, fake.version);
 
           // Assert
@@ -72,7 +72,7 @@ describe('src/routes/resolve/lib/NpmClient.js', () => {
 
           axios.get.mockResolvedValue({ data: fake });
 
-          const client = new underTest.NpmClient({});
+          const client = new underTest.NpmClient();
           client.resolveVersion = jest.fn().mockResolvedValue(expected);
 
 
@@ -98,7 +98,7 @@ describe('src/routes/resolve/lib/NpmClient.js', () => {
           axios.get.mockRejectedValue(expected);
 
           // Act
-          const client = new underTest.NpmClient({});
+          const client = new underTest.NpmClient();
 
           // Assert
           await expect(client.getPackage(fake.name, fake.version)).rejects.toBe(expected);

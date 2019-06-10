@@ -2,7 +2,7 @@ const { NpmClient } = require('./NpmClient');
 
 describe('integration test', () => {
   it('should get express 4.17.0 a package correctly', async () => {
-    const client = new NpmClient({});
+    const client = new NpmClient();
 
     const result = await client.getPackage('express', '4.17.0');
 
@@ -10,7 +10,7 @@ describe('integration test', () => {
   });
 
   it('should get snyk 1.168.0 a package correctly', async () => {
-    const client = new NpmClient({});
+    const client = new NpmClient();
 
     const result = await client.getPackage('snyk', '1.168.0');
 

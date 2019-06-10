@@ -16,7 +16,7 @@ const get = async (req, res) => {
       return;
     }
 
-    const client = new NpmClient({});
+    const client = new NpmClient();
 
     const resolver = new Resolver({ client });
 

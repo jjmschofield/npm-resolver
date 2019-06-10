@@ -7,7 +7,7 @@ describe('integration test', () => {
   });
 
   it('should resolve express 4.17.0', async () => {
-    const client = new NpmClient({});
+    const client = new NpmClient();
 
     const resolver = new Resolver({ client });
 
@@ -19,7 +19,7 @@ describe('integration test', () => {
   });
 
   it('should resolve snyk 1.168.0', async () => {
-    const client = new NpmClient({});
+    const client = new NpmClient();
 
     const resolver = new Resolver({ client });
 
